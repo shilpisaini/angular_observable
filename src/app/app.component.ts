@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Student } from './student.model';
+import { StudentService } from './student.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-observable';
+  students: Student[] = [];
+
+    constructor(private studentservice: StudentService) {}
+
+    ngOnInit() {
+        const studentsObservable = this.studentservice.getStudents();
+        studentsObservable.subscribe((studentsData: Student[]) => {
+            this.students = studentsData;
+        });
+    }
+
 }
